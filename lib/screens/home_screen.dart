@@ -12,7 +12,7 @@ class  _HomeScreenState extends State<HomeScreen> {
    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home")
+        title: Text("Home! Welcome")
       ),
       drawer: DrawerNavigation(),
     );
