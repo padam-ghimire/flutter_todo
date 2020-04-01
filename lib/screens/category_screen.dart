@@ -19,7 +19,7 @@ class  _CategoryScreen extends State<CategoryScreen> {
   var _category= Category();
   var _categoryService = CategoryService();
 
-  List<Widget> categoryList = List<Widget>();
+  List<Category> _categoryList = List<Category>();
 
 
     void initState(){
@@ -30,7 +30,28 @@ class  _CategoryScreen extends State<CategoryScreen> {
     var categories =await _categoryService.getCategories();
 
     categories.forEach((category){
-      print(category['name']);
+      setState(() {
+        var model = Category();
+      model.name= category['name'];
+      _categoryList.add(model);
+      });
+
+
+  //  _categoryList.add(
+  //    Card(
+  //      child: ListTile(
+  //        leading: IconButton(icon: Icon(Icons.edit),onPressed: (){},),
+  //        title: Row(
+  //          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //          children: <Widget>[
+  //            Text(category['name']),
+  //            IconButton(icon: Icon(Icons.delete), onPressed: (){})
+  //          ],
+  //        ),
+  //      ),
+  //    )
+  //  );
+
     });
   }
 
@@ -45,6 +66,7 @@ class  _CategoryScreen extends State<CategoryScreen> {
             _category.description = _categoryDescription.text;
            var results = await _categoryService.saveCategory(_category);
            print(results);
+          // _categoryList.add(ListTile(title: Text(category['name']),));
 
           },
         ),
@@ -94,7 +116,21 @@ class  _CategoryScreen extends State<CategoryScreen> {
         title: Text("Categories")
 
       ),
-      body: Center(child: Text("Welcome to category"),),
+      body: ListView.builder(itemCount:_categoryList.length,itemBuilder:(context,index){
+            return Card(
+                child: ListTile(
+                  leading: IconButton(icon: Icon(Icons.edit),onPressed: (){},),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(_categoryList[index].name),
+                      IconButton(icon: Icon(Icons.delete), onPressed: (){})
+           ],
+         ),
+       ),
+     );
+      } ),
+      
       floatingActionButton: FloatingActionButton(
         child:Icon(Icons.add),
         onPressed:(){
