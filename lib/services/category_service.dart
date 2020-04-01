@@ -15,4 +15,9 @@ saveCategory(Category category) async{
      return await _repository.save('categories', category.categoryMap());
   }
 
+
+  getCategories() async{
+    return await _repository.getAll('categories');
+  }
+
 }

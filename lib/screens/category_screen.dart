@@ -19,6 +19,21 @@ class  _CategoryScreen extends State<CategoryScreen> {
   var _category= Category();
   var _categoryService = CategoryService();
 
+  List<Widget> categoryList = List<Widget>();
+
+
+    void initState(){
+      super.initState();
+      getAllCategories();
+    }
+  getAllCategories()async{
+    var categories =await _categoryService.getCategories();
+
+    categories.forEach((category){
+      print(category['name']);
+    });
+  }
+
    _showFormDialog(BuildContext context){
     return showDialog(context: context,barrierDismissible:true,builder:(param){
       return AlertDialog(title: Text("Add New Category"),
